@@ -2,7 +2,7 @@
 # Fun Olympics
 
 Fun Olympics is a web application designed to host various fun events and competitions. Users can participate in events, view event details, upload media, and interact with other participants.
-
+ 
 ## Features
 
 - **User Registration and Authentication**: Users can create accounts and log in to access the platform.
