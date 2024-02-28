@@ -33,6 +33,7 @@ builder.Services.AddScoped<DBconn>();
 builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<IEventService,EventService>();
 builder.Services.AddScoped<IGalleryService,GalleryService>();
+builder.Services.AddScoped<ICommentService,CommentService>();
 // builder.Services.AddAutoMapper();
 // builder.Services.AddScoped<IMapper,Mapper>();
 
