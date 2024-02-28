@@ -15,6 +15,8 @@ using DBconnection_namespace;
 using policyConfigurations_pnamespace;
 
 using BiddingService.Utils;
+using Backed.Services;
+using AutoMapper;
 
 
 
@@ -28,7 +30,10 @@ builder.Services.AddDbContext<DBconn>(options => options.UseNpgsql(builder.Confi
 // builder.Services.AddScoped<BidServices>();
 builder.Services.AddScoped<Jwt>();
 builder.Services.AddScoped<DBconn>();
-/*builder.Services.AddScoped<ProductService>();*/
+builder.Services.AddScoped<IUserService,UserService>();
+// builder.Services.AddAutoMapper();
+// builder.Services.AddScoped<IMapper,Mapper>();
+
 //=========================AUTHORIZATION=========================================================
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(options =>
