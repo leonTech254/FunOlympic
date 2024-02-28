@@ -31,6 +31,7 @@ builder.Services.AddDbContext<DBconn>(options => options.UseNpgsql(builder.Confi
 builder.Services.AddScoped<Jwt>();
 builder.Services.AddScoped<DBconn>();
 builder.Services.AddScoped<IUserService,UserService>();
+builder.Services.AddScoped<IEventService,EventService>();
 // builder.Services.AddAutoMapper();
 // builder.Services.AddScoped<IMapper,Mapper>();
 

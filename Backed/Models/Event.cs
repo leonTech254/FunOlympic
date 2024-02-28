@@ -12,7 +12,7 @@ namespace Backed.Models
      [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
-    public string EventDate { get; set; }
+    public DateTime EventDate { get; set; }
     public string EventName { get; set; }
     public string EventImageUrl { get; set; }
     public string EventDescription { get; set; }
