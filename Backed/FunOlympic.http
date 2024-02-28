@@ -1,0 +1,6 @@
+@FunOlympic_HostAddress = http://localhost:5215
+
+GET {{FunOlympic_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
