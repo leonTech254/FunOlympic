@@ -1,43 +1,86 @@
-<header>
-    <link rel="stylesheet" href="css/style.css">
-</header>
-<div class="header_section">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="logo"><a href="index.html"><img src="images/logo.png"></a></div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                @foreach (var item in navBarModel)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link" href="@item.navLink">@item.navName</a>
-                    </li>
-                }
-            </ul>
-        </div>
-    </nav>
-</div>
+@inject NavigationManager _navigationManager;
+@inject IJSRuntime _iJSRuntime;
 
-@code {
-    public class NavBarModel
-    {
-        public string navName { get; set; }
-        public string navLink { get; set; }
-    }
-
-    public List<NavBarModel> navBarModel;
-
-    protected override void OnInitialized()
-    {
-        navBarModel = new List<NavBarModel>()
+<head>
+    <link rel="stylesheet" href="css/Nav.css">
+</head>
+<div class="Nav_bar_component">
+<nav style="background-color: @(isBackground ? "var(--primary_color)" : "rgba(30, 30, 30, 0.34)")">
+    <div class="company_logo"><span>FunOlympics</span></div>
+    <ul class="nav_menu">
+        @if(navBarITems!=null)
         {
-            new NavBarModel() { navName = "HOME", navLink = "/" },
-            new NavBarModel() { navName = "ABOUT US", navLink = "/about-us" },
-            new NavBarModel() { navName = "EVENTS", navLink = "/events" },
-            new NavBarModel() { navName = "CONTACTS", navLink = "/contacts" },
-            new NavBarModel() { navName = "ACCOUNT", navLink = "/profile" }
-        };
+            @foreach(NavBarITem nav_item in navBarITems)
+            {
+            <li style="color: @(nav_item.navItemUrl==@active_link ? "var(--secondary_color)" : "white")" class="d-flex" @onclick="()=>gotoPage(nav_item)" ><span class="material-icons">@nav_item.icon</span> @nav_item.navItemName</li>
+            }
+
+        }else
+        {
+            <p>Loading navigation Bar</p>
+
+        }
+    </ul>
+    <span class="material-icons menu_icon" @onclick="ToggleMenu">menu</span>
+</nav>
+<div class="emptyDiv"></div>
+</div>
+@code
+{
+    
+    public List<NavBarITem> navBarITems;
+    [Parameter]
+    public Boolean isBackground {get;set;}
+    public String active_link {get;set;}
+
+        protected override void OnInitialized()
+        {
+
+        string fullPath = _navigationManager.Uri;
+
+        string basePath = _navigationManager.BaseUri;
+
+         active_link = "/"+fullPath.Substring(basePath.Length);
+            
+            navBarITems = new ()
+            {
+                new NavBarITem()
+                {
+                    navItemName="Home",
+                    navItemUrl="/",
+                    icon="home"
+                },
+                   new NavBarITem()
+                {
+                    navItemName="About",
+                    navItemUrl="/about_us",
+                    icon="info"
+                },
+                   new NavBarITem()
+                {
+                    navItemName="Events",
+                    navItemUrl="/events",
+                    icon="brush"
+                },
+                   new NavBarITem()
+                {
+                    navItemName="Account",
+                    navItemUrl="/profile",
+                    icon="person"
+                }
+
+            };
+            
+        }
+
+    public void gotoPage(NavBarITem navItem)
+    {
+        _navigationManager.NavigateTo(navItem.navItemUrl);
+        Console.WriteLine("Navigation bar clicked");
+
+    }
+    public void ToggleMenu()
+    {
+        _iJSRuntime.InvokeVoidAsync("toogle_menu");
     }
 }

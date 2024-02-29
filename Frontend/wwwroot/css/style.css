@@ -30,6 +30,7 @@ src: url("../fonts/BalooChettan-Regular.ttf");
 
 /*--------------------------------------------------------------------- skeleton ---------------------------------------------------------------------*/
 
+
 * {
      box-sizing: border-box !important;
      transition: ease all 0.5s;
@@ -228,8 +229,9 @@ button {
     z-index: 1;
 }
 .logo{
-    width: 40%;
+    width: 90px;
     float: left;
+
 }
 .navbar-light .navbar-nav .nav-link {
     color: #040000;
