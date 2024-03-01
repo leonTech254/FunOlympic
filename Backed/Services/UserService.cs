@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Backed.Models;
 using DBconnection_namespace;
+using Backed.Utills;
 
 namespace Backed.Services
 {
@@ -11,9 +12,12 @@ namespace Backed.Services
     {
         private readonly DBconn _context;
 
-        public UserService(DBconn context)
+        private readonly Jwt _jwt;
+
+        public UserService(DBconn context,Jwt jwt)
         {
             _context = context;
+            _jwt=jwt;
         }
 
         public async Task<ActionResult<ResponseDTO>> GetUsersAsync()
@@ -119,8 +123,9 @@ namespace Backed.Services
                 {
                     return new ResponseDTO { message = "Invalid email or password", responseData = null };
                 }
+                var custResponseData= new {userInfo=user,token=_jwt.GenerateToken(user)};
 
-                return new ResponseDTO { message = "Login successful", responseData = user };
+                return new ResponseDTO { message = "Login successful", responseData = custResponseData };
             }
             catch (Exception ex)
             {

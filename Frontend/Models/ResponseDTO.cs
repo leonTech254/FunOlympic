@@ -9,6 +9,7 @@ namespace Frontend.Models
     {
         public string message {get;set;}
         public Object responseData {get;set;}
+        public Object value {get;set;}
         
     }
 }

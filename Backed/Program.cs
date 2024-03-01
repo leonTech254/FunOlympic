@@ -14,9 +14,9 @@ using Azure.Messaging.ServiceBus;
 using DBconnection_namespace;
 using policyConfigurations_pnamespace;
 
-using BiddingService.Utils;
 using Backed.Services;
 using AutoMapper;
+using Backed.Utills;
 
 
 
