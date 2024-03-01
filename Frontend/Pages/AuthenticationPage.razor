@@ -1,0 +1,22 @@
+@page "/auth/{action}"
+
+<div>
+    @* <NavBar></NavBar> *@
+</div>
+<div class="pt-4 auth-container" >
+@if (Action == "reg")
+{
+    <RegisterUser></RegisterUser>
+}
+else if (Action == "login")
+{
+   <LoginUser></LoginUser>
+   
+}
+
+
+</div>
+@code {
+    [Parameter]
+    public string Action { get; set; }
+}

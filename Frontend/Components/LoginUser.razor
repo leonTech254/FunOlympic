@@ -1,0 +1,107 @@
+@inject AuthService AuthApiService;
+@* @inject JSRuntime JSRuntime; *@
+@inject IJSRuntime _JSRuntime;
+@inject NavigationManager NavigationManager;
+@inject TokenServices _tokenService;
+<head>
+    <link rel="stylesheet" href="css\auth.css">
+</head>
+
+<EditForm Model="@loginModel" OnValidSubmit="HandleValidSubmit" class="authForm">
+    <h1>@FormTitle</h1>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+
+    <div class="input_group">
+        <label for="username">@usernameLabel:</label>
+        <input id="username" class="" @bind="loginModel.Email" />
+    </div>
+
+    <div class="input_group">
+        <label for="password">@secretefield:</label>
+        <input id="password" type="password" class="" @bind="loginModel.Password" />
+    </div>
+      <div><span class="text-primary btn" @onclick="goregister">don't have and account?</span></div>
+      <div><span class="text-primary btn" @onclick="activateMyAccount">@labelState</span></div>
+
+    <button type="submit" class=" ">@loginbtnLabel</button>
+</EditForm>
+
+@code {
+    private LoginDTO loginModel = new LoginDTO();
+    private bool isLoginState=true;
+    private string loginbtnLabel="Login";
+    private string labelState="Activate account";
+    private string secretefield="Password";
+    private string FormTitle="Welcome back";
+    private string usernameLabel="Username";
+
+
+        protected override async Task OnInitializedAsync()
+        {
+
+        }
+
+        private async Task  HandleValidSubmit()
+    {
+       
+       
+        if(isLoginState)
+        {
+        ResponseDTO loginResponse= await AuthApiService.LoginAsync(loginModel); 
+        if(loginResponse!=null)
+        {
+            Console.WriteLine(loginResponse.message);
+        @* String token =loginResponse.usertoker;
+        await _tokenService.SetTokenAsync(token); *@
+        @* NavigationManager.NavigateTo("/profile"); *@
+
+        }
+         
+
+        }else
+        {
+        //activate the account 
+        @* await AuthApiService.ActivateAccount(loginModel);   *@
+
+        }
+      
+    }
+
+    private async Task activateMyAccount()
+    {
+        if(!isLoginState)
+        {
+        
+        loginbtnLabel="Login";
+        secretefield="Password";
+        labelState="Activated account";
+        FormTitle="Welcome Back";
+        usernameLabel="username";
+            isLoginState=true;
+
+
+        }else
+        {
+        isLoginState=false;
+
+            secretefield="Activation code";
+            labelState="login to account";
+            loginbtnLabel="Activate";
+            FormTitle="Activate Account";
+            usernameLabel="Email";
+            
+        }
+
+    }
+private async Task StoreTokenInLocalStorage(String token)
+    {
+        await _JSRuntime.InvokeVoidAsync("localStorageFunctions.setItem", "token", token);
+    }
+     public void goregister()
+    {
+        NavigationManager.NavigateTo("/auth/reg");
+    }
+
+}

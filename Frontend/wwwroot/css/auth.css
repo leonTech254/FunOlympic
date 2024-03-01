@@ -1,0 +1,94 @@
+.authForm
+{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    background-color: #CCCCCC;
+    width: 35vw;
+    margin: auto;
+}
+.authForm h1
+{
+    font-weight: bold;
+    color: var(--secondary_color);
+    text-align: center;
+}
+
+.authForm
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 40px 20px;
+
+}
+
+.authForm .input_group 
+{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.authForm .input_group input
+{
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid var(--secondary_color);
+    outline: none;
+}
+
+.authForm label
+{
+    font-weight: bold;
+    color: var(--secondary_color);
+}
+
+
+.authForm button
+{
+    color: #fff;
+    text-transform: uppercase;
+    padding: 10px;
+    background-color: var(--secondary_color);
+    width: 50%;
+    margin: auto;
+    border-radius: .4rem;
+}
+
+.validation_container
+{
+    text-align: center;
+}
+
+
+
+ .radio_button_container {
+    display: flex;
+    align-items: center;
+}
+
+.radio_button_container input[type="radio"] {
+    margin-right: 5px; 
+    margin-left: 5px;
+}
+
+.radio_button_container input[type="radio"]:checked {
+    border-color: #3498db; 
+}
+
+
+.radio_button_container label {
+    color: var(--secondary_color); 
+}
+
+
+
+@media (max-width:500px)
+{
+    .authForm
+    {
+        width: 90%;
+    }
+}

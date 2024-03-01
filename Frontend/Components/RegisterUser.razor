@@ -1,0 +1,64 @@
+
+@inject AuthService AuthApiService;
+@inject NavigationManager NavigationManager;
+<head>
+    <link rel="stylesheet" href="css\auth.css">
+</head>
+<EditForm Model="@registerModel" OnValidSubmit="HandleValidSubmit" class="authForm">
+<h1>Register</h1>
+<div class="validation_container">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+</div>
+  <div class="input_group">
+        <label for="username">Firstname:</label>
+        <InputText id="username" class="" @bind-Value="registerModel.FirstName" />
+    </div>
+     <div class="input_group">
+        <label for="firstname">LastName:</label>
+        <InputText id="firstname" class="" @bind-Value="registerModel.LastName" />
+    </div>
+    
+    <div class="input_group">
+        <label for="email">Email:</label>
+        <InputText type="email" id="email" class="" @bind-Value="registerModel.Email" />
+    </div>
+
+   
+
+    <div class="input_group">
+        <label for="password">Password:</label>
+        <InputText id="password" type="password" class="" @bind-Value="registerModel.Password" />
+    </div>
+
+  
+
+   
+      <div><span class="text-primary btn" @onclick="goLogin">Already have an account?</span></div>
+    <button type="submit" class="btn btn-primary mt-4">Register</button>
+</EditForm>
+
+@code {
+    private RegisterDTO registerModel = new RegisterDTO();
+    private async void HandleValidSubmit()
+    {
+        ResponseDTO response=await AuthApiService.RegisterUserAsync(registerModel);
+        @* if(response.message)
+        {
+        goLogin();
+
+        }else
+        {
+            //error
+            Console.WriteLine("failed to login");
+        } *@
+      
+    }
+      public void goLogin()
+    {
+        NavigationManager.NavigateTo("/auth/login");
+        
+    }
+
+  
+}
