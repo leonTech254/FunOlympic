@@ -16,9 +16,15 @@
                 <h5 class="card-title">@eventModel.EventName</h5>
                 <p class="card-text">@eventModel.EventDescription</p>
             </div>
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush date_container">
                 <li class="list-group-item"><strong>Date:</strong> @eventModel.EventDate.ToShortDateString()</li>
+                <button>
+                    <span class="material-icons">
+                    arrow_right_alt
+                    </span>
+                </button>
             </ul>
+
         </div>
     }
     </div>
@@ -28,10 +34,8 @@
 @code {
     private List<EventModel> eventModelList;
 
-        protected override void OnInitialized()
-        
-           
-    {
-        eventModelList =  _eventService.getAllEvents();
-    }
+        protected override async Task OnInitializedAsync() 
+            {
+                eventModelList = await _eventService.getAllEvents();
+            }
 }

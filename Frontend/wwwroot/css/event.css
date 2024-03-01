@@ -41,3 +41,20 @@
     font-size: 14px;
     color: #555;
 }
+
+.date_container
+{
+    position: relative;
+}
+.date_container button
+{
+    position: absolute;
+    right: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    background:none;
+}
+.date_container .material-icons:active
+{
+    transform: scale(.9);
+}
