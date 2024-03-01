@@ -1,13 +1,29 @@
+@inject EventService _eventService;
 
-<div class="card">
-   
-<img src="@EventImageUrl" class="card-img-top" alt="Event Image">
-    
-    <div class="card-body">
-        <h5 class="card-title">@EventName</h5>
-        <p class="card-text">@EventDescription</p>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item"><strong>Date:</strong> @EventDate.ToShortDateString()</li>
-    </ul>
-</div>
+@if(eventModelList != null && eventModelList.Count > 0)
+{
+    @foreach(var eventModel in eventModelList)
+    {
+        <div class="card">
+            <img src="@eventModel.EventImageUrl" class="card-img-top" alt="Event Image">
+            <div class="card-body">
+                <h5 class="card-title">@eventModel.EventName</h5>
+                <p class="card-text">@eventModel.EventDescription</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Date:</strong> @eventModel.EventDate.ToShortDateString()</li>
+            </ul>
+        </div>
+    }
+}
+
+@code {
+    private List<EventModel> eventModelList;
+
+        protected override void OnInitialized()
+        
+           
+    {
+        eventModelList =  _eventService.getAllEvents();
+    }
+}

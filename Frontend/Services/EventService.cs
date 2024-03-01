@@ -36,6 +36,11 @@ namespace Frontend.Services
             };
         }
 
+        public List<EventModel> getAllEvents()
+        {
+                return Events;
+        }
+
         public void AddEvent(EventModel newEvent)
         {
             Events.Add(newEvent);
