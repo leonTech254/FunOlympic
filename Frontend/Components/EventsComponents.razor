@@ -1,7 +1,13 @@
 @inject EventService _eventService;
 
+<header>
+    <link rel="stylesheet" href="css/event.css">
+</header>
+
 @if(eventModelList != null && eventModelList.Count > 0)
 {
+    <div class="card_container">
+
     @foreach(var eventModel in eventModelList)
     {
         <div class="card">
@@ -15,6 +21,8 @@
             </ul>
         </div>
     }
+    </div>
+
 }
 
 @code {
