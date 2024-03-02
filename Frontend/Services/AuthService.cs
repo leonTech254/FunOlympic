@@ -66,9 +66,7 @@ namespace Frontend.Services
         var responseDTO = JsonSerializer.Deserialize<ResponseDTO>(jsonString, options);
 
         if (responseDTO != null)
-        {
-   
-            
+        {         
             return new ResponseDTO();
         }
         else

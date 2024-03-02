@@ -1,0 +1,90 @@
+.sideBar_container
+{
+    position: fixed;
+    background-color: var(--primary_color);
+    height: 100%;
+    width: 15rem;
+    transform: translateX(-15rem);
+    transition:transform 650ms;
+    top: 0;
+    z-index: 1000;
+
+}
+
+.open_side_menu
+{
+    transform: translateX(0);
+    transition:transform 650ms;
+}
+.sideBar_container .nav_cancel_item
+{
+    display: flex;
+    flex-direction: row-reverse;
+    cursor: pointer;
+
+
+}
+.navigation_bar_dashboard
+{
+    display: flex;
+    justify-content: space-between;
+}
+.sideBar_container li
+{
+    color: #fff;
+    padding:20px;
+    cursor: pointer;
+}
+.sideBar_container li:hover
+{
+    box-shadow:0px 0px 10px var(--secondary_color);
+    transition:box-shadow 650 ms;
+}
+
+
+.nav_cancel_item span
+{
+    font-size: 2rem;
+    color: var(--secondary_color);
+}
+.nav_cancel_item span:active
+{
+    transform: scale(.9);
+}
+
+
+
+.navigation_bar_dashboard
+{
+    height: 70px;
+    width: 100%;
+    background-color: var(--primary_color);
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding:0 20px;
+}
+
+.navigation_bar_dashboard .toggle_menu
+{
+    cursor: pointer;
+    color: #fff;
+    font-size: 2rem;
+}
+
+.profile_info
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+
+}
+.profile_info li
+{
+    font-size: xx-small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

@@ -1,0 +1,150 @@
+@inject IJSRuntime _iJSRuntime;
+@inject TokenServices _tokenService;
+@inject PopUpMessages _popUpMessages;
+@inject NavigationManager _navigationManager;
+<head>
+    <link rel="stylesheet" href="css\dashboard.css">
+</head>
+<div class="Profile_dash_board_container">
+
+    <div class="AllContentDisplay">
+        <div class="navigation_bar_dashboard">
+            <button class="btn btn-sm"  @onclick="ToggleMenu">
+        <span class="material-icons toggle_menu">menu</span>
+            </button>
+            <div class="userAccount">
+                <div class="profile_info">
+                    <li>
+                        @if(userModel!=null)
+                        {
+                        @userModel.username
+                        }
+                        
+                         <span class="material-icons" @onclick="Logout">settings_power</span></li>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="components">
+           <div class="components">
+    @switch (active_component)
+    {
+        case "Dashboard":
+            <MainDashBoard></MainDashBoard>
+            Console.WriteLine("Dashboard");
+            break;
+        case "My bids":
+            <MyBids></MyBids>
+            Console.WriteLine("My Bids");
+            break;
+        case "Profile Settings":
+            <ProfileSettings></ProfileSettings>
+            break;
+        case "Manage Website":
+            <ManageWebsite></ManageWebsite>
+            break;
+        default:
+            <MainDashBoard></MainDashBoard>
+            break;
+    }
+</div>
+
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+<div class="sideBar_container" id="side_bar">
+    <div class="nav_cancel_item">
+        <span class="material-icons" @onclick=ToggleMenu>cancel</span>
+    </div>
+<ul>
+    @if(navBarITems!=null)
+    {
+        <li>dnsbdnds</li>
+        @foreach(NavBarITem navItem in navBarITems)
+        {
+        <li @onclick="()=>OpenComp(navItem)" class="d-flex gap-2"><span class="material-icons" >@navItem.icon</span>@navItem.navItemName</li>
+        }
+    }
+</ul>
+</div>
+</div>
+@code 
+{
+    public List<NavBarITem> navBarITems;
+    private String active_component;
+    private UserModel userModel;
+
+        @* protected override async void OnAfterRender(bool firstRender)
+        {
+            userModel=await  _tokenService.getUserDetails();
+        } *@
+
+        protected override async Task OnInitializedAsync()
+        {
+         userModel=await  _tokenService.getUserDetails();
+        navBarITems=new()
+            {
+                new NavBarITem()
+                {
+                    navItemName="Dashboard",
+                    icon="home",
+                    routeRole=Roles.bidder
+
+                    
+                },
+                  new NavBarITem()
+                {
+                    navItemName="My Events",
+                    icon="shopping_cart",
+                    routeRole=Roles.bidder 
+                },
+                  new NavBarITem()
+                {
+                    navItemName="Profile Settings",
+                    icon="settings",
+                    routeRole=Roles.bidder
+                    
+                },
+              
+                  new NavBarITem()
+                {
+                    navItemName="Manage Website",
+                    icon="manage_accounts",
+                    routeRole=Roles.admin
+                },
+            }; 
+        }
+
+        public void ToggleMenu()
+        {
+            _iJSRuntime.InvokeVoidAsync("toggle_side_bar");
+
+        }
+
+        public async Task OpenComp(NavBarITem navItem)
+        {
+          
+            active_component=navItem.navItemName;
+            ToggleMenu();           
+        }
+
+        public void Logout()
+        {
+            _tokenService.LogOut();
+            _popUpMessages.sweetAlert("Authentication","Logged out successfully","success");
+            _navigationManager.Refresh();
+
+        }
+
+
+}

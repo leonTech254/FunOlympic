@@ -1,0 +1,56 @@
+@page "/profile"
+@inject TokenServices _tokenServices;
+@inject NavigationManager _navigationManager;
+
+<head>
+    <link rel="stylesheet" href="css\UsersProfile.css">
+</head>
+
+<div>
+    @* <DashBoard></DashBoard> *@
+    @if (IsAuthenticated)
+    {
+        <DashBoard></DashBoard>
+    }
+    else
+    {
+        <div class="access_denied_container">
+            <div class="Authentication_card">
+                <p class="auth_message">@auth_message</p>
+                <button class="btn btn_tologin" @onclick="ToLogin">Login</button>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    public bool IsAuthenticated { get; set; }
+    public string auth_message { get; set; } = "Check Credentials....";
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsAuthenticated = await _tokenServices.CheckTokenValidity();
+        Task.Run(async () =>
+        {
+            await Task.Delay(5000);
+
+            // Your function logic goes here
+            Console.WriteLine("Function called after 5 seconds.");
+
+            // Update UI on the main thread
+            InvokeAsync(() =>
+            {
+                auth_message = "Access Denied";
+                StateHasChanged();
+            });
+        });
+    }
+
+    public void ToLogin()
+    {
+        _navigationManager.NavigateTo("/auth/login");
+        
+    }
+
+   
+}

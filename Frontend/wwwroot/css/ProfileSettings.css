@@ -1,0 +1,141 @@
+.profiile_out_container
+{
+    width: 50vw;
+    /* background-color: red; */
+    display: flex;
+    margin: auto;
+    height: 50vh;
+    box-shadow: 0px 0px 10px black;
+    background-color: #D9D9D9;
+
+}
+
+.profile_pic_container img
+{
+    
+    height: 90px;
+    width:90px;
+    border-radius: 50%;
+    border: 1px solid var(--secondary_color);
+    padding: 10px;
+}
+
+
+.profile_pic_container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    /* background-color: yellow; */
+}
+
+.profile_pic_container
+{
+    flex: 1;
+}
+.proofile_information
+{
+    flex: 2;
+    /* background-color: aqua; */
+    box-shadow: 0px 0px 15px black;
+    height: 100%;
+}
+
+.profile_pic_container ul
+{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.user_form_update
+{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1rem;
+    padding:30px 20px;
+    /* place-content: center; */
+}
+
+.user_form_update .input_group 
+{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.user_form_update .input_group input
+{
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid var(--secondary_color);
+    outline: none;
+}
+.user_form_update label
+{
+    font-weight: bold;
+    color: var(--secondary_color);
+}
+
+.proofile_information button
+{
+    color: #fff;
+    text-transform: uppercase;
+    padding: 10px;
+    background-color: var(--secondary_color);
+    width: 50%;
+    margin: auto;
+    border-radius: .4rem;
+}
+
+
+.btn_container
+{
+    display: flex;
+}
+
+
+@media (max-width:500px)
+{
+    .profiile_out_container
+    {
+        flex-direction: column;
+        width: 90%;
+        height: fit-content;
+        padding:10px 0;
+
+    }
+
+    .user_form_update
+    {
+        grid-template-columns: repeat(1,1fr);
+    }
+    .profile_pic_container
+    {
+        /* flex-direction: row; */
+        
+    }
+    .profile_pic_container ul
+    {
+        margin: 0;
+        padding: 10px;
+        width: 100%;
+        text-align: left;
+        gap: .5rem;
+
+    }
+
+    .profiile_out_container ul span
+    {
+        font-weight: bold;
+    }
+    .proofile_information
+{
+    box-shadow: 0px 1px 1px black;
+}
+
+
+
+}

@@ -1,0 +1,101 @@
+@inject TokenServices _tokenService;
+@inject IJSRuntime _iJSRuntime;
+@inject PopUpMessages _popUpMessages;
+@inject AuthService _authApiService;
+<head>
+    <link rel="stylesheet" href="css\ProfileSettings.css">
+</head>
+<div class="mt-5">
+
+@if(user!=null)
+{
+<div class=profiile_out_container>
+<div class="profile_pic_container">
+   <img src="@(user.ProfileUrl == "default" ? "images/user_avator.png" : user.ProfileUrl)" alt="">
+  <InputFile  OnChange="HandleImageChange" type="file" id="IamgeUrlNew" style="display: none;"/>
+  <label class="btn text-uppercase btn-primary btn-sm" for="IamgeUrlNew">upload image</label>
+
+    <ul>
+        <li><span>username: @user.username</span></li>
+        <li><span>Email:</span> @user.Email</li>
+        <li><span>Role:</span>@user.userRole</li>
+    </ul>
+
+</div>
+<div class="proofile_information">
+    <ul class="user_form_update">
+         <div class="input_group">
+                <label for="">Full name</label>
+                <input type="text" @bind="user.Firstname">
+            </div>
+             <div class="input_group">
+                <label for="">Username</label>
+                <input type="text" @bind="user.username">
+            </div>
+             <div class="input_group">
+                <label for="">Email</label>
+                <input type="email" @bind="@user.Email">
+            </div>
+             <div class="input_group">
+                <label for="">passowrd</label>
+                <input type="password">
+            </div>
+         
+
+    </ul>
+    <div class="btn_container">
+ <button class="btn">Update Profile</button>
+    </div>
+   
+</div>
+@*  *@
+
+</div>
+}
+</div>
+
+
+@code
+{
+    private UserModel user;
+    protected override async Task OnInitializedAsync()
+    {
+        //default
+        
+        user=await _tokenService.getUserDetails();
+
+    }
+
+    public void UpdateProfile()
+    {
+        @* _iJSRuntime.InvokeVoidAsync("UpdateProfile"); *@
+
+
+    }
+
+      async Task HandleImageChange(InputFileChangeEventArgs e)
+    {
+
+        
+         string imageUrl= await _iJSRuntime.InvokeAsync<string>("uploadImageNew"); 
+            if(imageUrl!=null)
+            {
+                 @* user.ProfileUrl=imageUrl;
+                ProfileDO profile= new ProfileDO()
+                {
+                    profileurl=imageUrl
+                }; *@
+
+            
+           
+          
+            Console.WriteLine(imageUrl);
+            @* await _authApiService.UpdateMyProfilePic(profile); 
+            await _popUpMessages.sweetAlert("Profile Image Uploaded Successfully","Success","success"); *@
+            StateHasChanged();
+
+            }
+        
+        }
+
+}

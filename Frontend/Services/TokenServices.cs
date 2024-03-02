@@ -58,6 +58,7 @@ namespace Frontend.Services
         }
         try
         {
+            Console.WriteLine("!_12");
             var tokenS = tokenHandler.ReadToken(token) as JwtSecurityToken;
 
             var userId = tokenS?.Claims.First(claim => claim.Type == "user_id").Value;
@@ -65,7 +66,7 @@ namespace Frontend.Services
             var email = tokenS?.Claims.First(claim => claim.Type == "user_email").Value;
             var user_role = tokenS?.Claims.First(claim => claim.Type == "user_role").Value;
             var fullname = tokenS?.Claims.First(claim => claim.Type == "fullname").Value;
-            var ProfileUrl = tokenS?.Claims.First(claim => claim.Type == "profile_url").Value;
+            // var ProfileUrl = tokenS?.Claims.First(claim => claim.Type == "profile_url").Value;
             
             
             // Console.WriteLine(userId+" hello leon token");
@@ -76,7 +77,6 @@ namespace Frontend.Services
                 Email=email,
                 user_id=userId,
                 Firstname=fullname,
-                ProfileUrl=ProfileUrl
 
             };
 
@@ -88,6 +88,7 @@ namespace Frontend.Services
         }
         catch (Exception ex)
         {
+            Console.WriteLine("My error "+ex);
              await _popUpMessages.sweetAlert("Access Denied You need To Login First","Authentication","error");
             return null;;
 
