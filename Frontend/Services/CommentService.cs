@@ -40,24 +40,37 @@ namespace Frontend.Services
            }
         }
 
-        public async Task GetComments(int id)
+        public async Task<List<CommentModel>> GetComments(int id)
         {
           var response= await _client.GetAsync(_baseURL+"/"+id);
             if(response.IsSuccessStatusCode)
             {
+                var options = new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true
+    };
+
                 
                 Console.WriteLine("nfsd dddddvf");
                 string jsonString=await response.Content.ReadAsStringAsync();
             //    JsonObject jsonObject=JObject.Parse(jsonString);
 
-                ResponseData responseData=JsonSerializer.Deserialize<ResponseData>(jsonString);
-               Console.WriteLine(responseData.Comments+"mmmmm");
+                ResponseDTO responseDTO=JsonSerializer.Deserialize<ResponseDTO>(jsonString,options);
+                Console.WriteLine("my data is here");
                 
-                
+                List<CommentModel> comments=JsonSerializer.Deserialize<List<CommentModel>>(responseDTO.responseData.ToString(),options);
+                // foreach(var comment in comments)
+                // {
+                //     Console.WriteLine(comment.Id);
+                // }
 
+                return comments;
+                
+            
                             
                  await _popUpMessages.sweetAlert("All comments got successfully","Comments","success");
             }else{
+                return null;
                await _popUpMessages.sweetAlert("Failed to Fetch Comments","Comments","error");
             }
             

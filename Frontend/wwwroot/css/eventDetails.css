@@ -92,3 +92,13 @@ overflow: hidden;
 {
     transform: scale(1);
 }
+.allComments ul li
+{
+display: flex;
+flex-direction: column;
+}
+
+.allComments .name
+{
+    font-weight: bold;
+}

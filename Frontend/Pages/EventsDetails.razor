@@ -23,6 +23,21 @@
            <input type="text" id="EventForm" placeholder="Add Comment...." @bind="user_comment">
            <button @onclick="()=>AddComment(eventModel)">Add Comment</button>
          </div>
+         <div class="allComments">
+            <ul>
+                @foreach(var comment in commentsList)
+                {
+                <li>
+                    @* <img src="images/" alt=""> *@
+                    <span class="name">@comment.username</span>
+                    <span >@comment.Comment</span>
+
+                </li>
+                }
+             
+            </ul>
+            
+         </div>
         </div>
     </div>
     <div class="other-events">
@@ -40,22 +55,37 @@
 
     public EventModel eventModel;
     public List<EventModel> OtherEvents = new List<EventModel>();
-        public string user_comment;
+    public string user_comment; 
+    public List<CommentModel> commentsList;
+        
 
     protected override async Task OnInitializedAsync()
     {
         int id = int.Parse(EventId);
         eventModel = await _eventService.getEventDetails(id);
-        await _commentService.GetComments(id);
+       commentsList= await _commentService.GetComments(id);
 
         // Simulated list of other events (replace with actual data)
         OtherEvents = await _eventService.getAllEvents();
-        OtherEvents.RemoveAll(evt => evt.Id == id); // Remove the current event from the list
+        OtherEvents.RemoveAll(evt => evt.Id == id); 
+        @* Timer timer = new Timer(changeState, null, TimeSpan.Zero, TimeSpan.FromSeconds(1)); *@
+    Timer timer = new Timer(async _ => await ChangeState(), null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
     }
+
+  public async Task ChangeState()
+{
+    StateHasChanged();
+    commentsList = await _commentService.GetComments(int.Parse(EventId));
+    Console.WriteLine("hello leon");
+}
+
+
 
     public async Task AddComment(EventModel eventModel)
     {
         await _commentService.AddComment(eventModel.Id,user_comment); 
+        user_comment="";
+        await ChangeState();
     }
 
    
