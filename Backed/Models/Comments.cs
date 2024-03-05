@@ -18,6 +18,7 @@ namespace Backed.Models
     public string username {get;set;}
 
     public string userId {get;set;}
+    public DateTime timeCommented {get;set;}
  
 }
 }

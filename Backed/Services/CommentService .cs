@@ -47,7 +47,8 @@ namespace Backed.Services
                 Comment=commentsDTO.Comment,
                 PictureId=commentsDTO.PictureId,
                 userId=userId,
-                username=username
+                username=username,
+                timeCommented=DateTime.UtcNow
 
             };
             _context.Comments.Add(comment);
