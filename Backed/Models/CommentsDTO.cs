@@ -7,8 +7,7 @@ namespace Backed.Models
 {
     public class CommentsDTO
     {
-        
-          public int PictureId { get; set; }
+    public int PictureId { get; set; }
     public string Comment { get; set; }
     }
 }
