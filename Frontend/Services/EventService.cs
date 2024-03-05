@@ -40,6 +40,28 @@ namespace Frontend.Services
                 
         }
 
+
+        public async Task<EventModel> getEventDetails(int eventId)
+        {
+            var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                var response= await _client.GetAsync(_baseURL+"events/"+eventId);
+                 if(response.IsSuccessStatusCode)
+           {
+            var jsonString=await response.Content.ReadAsStringAsync();
+            var responseDTO=JsonSerializer.Deserialize<ResponseDTO>(jsonString,options);
+            EventModel events=JsonSerializer.Deserialize<EventModel>(responseDTO.responseData.ToString(),options);
+            Console.WriteLine(responseDTO.responseData.ToString() +"i am here");
+            return events;
+           }else
+           {
+            return null;
+           }
+
+        }
+
         public void AddEvent(EventModel newEvent)
         {
             // Events.Add(newEvent);
