@@ -18,8 +18,8 @@ namespace Backed.Models
     [ForeignKey("UserId")]
     public User User { get; set; }
 
-    [InverseProperty("Gallery")]
-    public ICollection<Comments> Comments { get; set; }
+    // [InverseProperty("Gallery")]
+    // public ICollection<Comments> Comments { get; set; }
 }
 
 }

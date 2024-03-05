@@ -35,7 +35,10 @@ namespace Backed.Controllers
         [HttpPost]
         public async Task<ActionResult<ResponseDTO>> CreateComment(CommentsDTO comment)
         {
-            return await _commentService.CreateCommentAsync(comment);
+            string jwtToken = HttpContext.Request.Headers["Authorization"];
+            
+
+            return await _commentService.CreateCommentAsync(comment,jwtToken);
         }
 
         [HttpPut("{id}")]

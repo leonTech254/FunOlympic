@@ -7,11 +7,26 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FunOlympic.Migrations
 {
     /// <inheritdoc />
-    public partial class IntDatabase : Migration
+    public partial class migrationDatabse : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PictureId = table.Column<int>(type: "integer", nullable: false),
+                    Comment = table.Column<string>(type: "text", nullable: false),
+                    userId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Events",
                 columns: table => new
@@ -58,12 +73,6 @@ namespace FunOlympic.Migrations
                 {
                     table.PrimaryKey("PK_EventSubscribers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EventSubscribers_Events_EventId",
-                        column: x => x.EventId,
-                        principalTable: "Events",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_EventSubscribers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
@@ -91,36 +100,6 @@ namespace FunOlympic.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PictureId = table.Column<int>(type: "integer", nullable: false),
-                    Comment = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comments_Galleries_PictureId",
-                        column: x => x.PictureId,
-                        principalTable: "Galleries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_PictureId",
-                table: "Comments",
-                column: "PictureId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EventSubscribers_EventId",
-                table: "EventSubscribers",
-                column: "EventId");
-
             migrationBuilder.CreateIndex(
                 name: "IX_EventSubscribers_UserId",
                 table: "EventSubscribers",
@@ -139,13 +118,13 @@ namespace FunOlympic.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
+                name: "Events");
+
+            migrationBuilder.DropTable(
                 name: "EventSubscribers");
 
             migrationBuilder.DropTable(
                 name: "Galleries");
-
-            migrationBuilder.DropTable(
-                name: "Events");
 
             migrationBuilder.DropTable(
                 name: "Users");

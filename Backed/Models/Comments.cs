@@ -14,8 +14,8 @@ namespace Backed.Models
     public int Id { get; set; }
     public int PictureId { get; set; }
     public string Comment { get; set; }
-  
-    [ForeignKey("PictureId")]
-    public Gallery Gallery { get; set; }
+
+    public string userId {get;set;}
+ 
 }
 }

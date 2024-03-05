@@ -17,7 +17,7 @@ namespace Backed.Models
     public string EventImageUrl { get; set; }
     public string EventDescription { get; set; }
 
-    [InverseProperty("Event")]
-    public ICollection<EventSubscribers> EventSubscribers { get; set; }
+   //  [InverseProperty("Event")]
+   //  public ICollection<EventSubscribers> EventSubscribers { get; set; }
 }
 }

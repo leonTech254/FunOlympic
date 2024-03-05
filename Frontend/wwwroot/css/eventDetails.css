@@ -31,6 +31,7 @@
 .event-video {
     max-width: 100%;
     border-radius: 4px;
+    object-fit: cover;
 }
 
 .other-events {
@@ -58,4 +59,36 @@
 
 .other-events a:hover {
     text-decoration: underline;
+}
+.input_container
+{
+    display: flex;
+    background-color: var(--primary_color);
+    border-radius: 1rem;
+overflow: hidden;
+
+
+}
+
+.input_container input
+{
+    flex: 1;
+    padding: 10px;
+    height: 2.5rem;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+.input_container input::placeholder
+{
+    color: white;
+}
+.input_container button
+{
+    padding: 10px;
+}
+
+.input_container button:active
+{
+    transform: scale(1);
 }

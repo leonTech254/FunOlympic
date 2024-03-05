@@ -13,5 +13,6 @@ builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<TokenServices>();
 builder.Services.AddScoped<PopUpMessages>();
+builder.Services.AddScoped<CommentService>();
 
 await builder.Build().RunAsync();

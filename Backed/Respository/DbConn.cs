@@ -19,25 +19,25 @@ namespace DBconnection_namespace
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Define foreign key relationships
-            modelBuilder.Entity<Gallery>()
-                .HasOne(g => g.User)
-                .WithMany(u => u.Galleries)
-                .HasForeignKey(g => g.UserId);
+            // modelBuilder.Entity<Gallery>()
+            //     .HasOne(g => g.User)
+            //     .WithMany(u => u.Galleries)
+            //     .HasForeignKey(g => g.UserId);
 
-            modelBuilder.Entity<Comments>()
-                .HasOne(c => c.Gallery)
-                .WithMany(g => g.Comments)
-                .HasForeignKey(c => c.PictureId);
+            // modelBuilder.Entity<Comments>()
+            //     .HasOne(c => c.Gallery)
+            //     .WithMany(g => g.Comments)
+            //     .HasForeignKey(c => c.PictureId);
 
-            modelBuilder.Entity<EventSubscribers>()
-                .HasOne(es => es.User)
-                .WithMany(u => u.EventSubscribers)
-                .HasForeignKey(es => es.UserId);
+            // modelBuilder.Entity<EventSubscribers>()
+            //     .HasOne(es => es.User)
+            //     .WithMany(u => u.EventSubscribers)
+            //     .HasForeignKey(es => es.UserId);
 
-            modelBuilder.Entity<EventSubscribers>()
-                .HasOne(es => es.Event)
-                .WithMany(e => e.EventSubscribers)
-                .HasForeignKey(es => es.EventId);
+            // modelBuilder.Entity<EventSubscribers>()
+            //     .HasOne(es => es.Event)
+            //     .WithMany(e => e.EventSubscribers)
+            //     .HasForeignKey(es => es.EventId);
         }
     }
 }

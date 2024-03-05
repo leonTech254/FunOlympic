@@ -30,6 +30,10 @@ namespace Frontend.Services
         public async Task<ResponseDTO> RegisterUserAsync(RegisterDTO user)
         {
             var response = await _client.PostAsJsonAsync($"{_baseURL}users/register-user", user);
+            if(response.IsSuccessStatusCode)
+            {
+               await _popUpMessages.sweetAlert("Authentication","Registered successfully","success");
+            }
             return await response.Content.ReadFromJsonAsync<ResponseDTO>();
         }
 

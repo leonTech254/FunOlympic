@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FunOlympic.Migrations
 {
     [DbContext(typeof(DBconn))]
-    [Migration("20240228130554_IntDatabase")]
-    partial class IntDatabase
+    [Migration("20240305115220_migrationDatabse")]
+    partial class migrationDatabse
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,9 +40,11 @@ namespace FunOlympic.Migrations
                     b.Property<int>("PictureId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.Property<string>("userId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.HasIndex("PictureId");
+                    b.HasKey("Id");
 
                     b.ToTable("Comments");
                 });
@@ -90,8 +92,6 @@ namespace FunOlympic.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EventId");
 
                     b.HasIndex("UserId");
 
@@ -153,32 +153,13 @@ namespace FunOlympic.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Backed.Models.Comments", b =>
-                {
-                    b.HasOne("Backed.Models.Gallery", "Gallery")
-                        .WithMany("Comments")
-                        .HasForeignKey("PictureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Gallery");
-                });
-
             modelBuilder.Entity("Backed.Models.EventSubscribers", b =>
                 {
-                    b.HasOne("Backed.Models.Event", "Event")
-                        .WithMany("EventSubscribers")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("User", "User")
                         .WithMany("EventSubscribers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Event");
 
                     b.Navigation("User");
                 });
@@ -192,16 +173,6 @@ namespace FunOlympic.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Backed.Models.Event", b =>
-                {
-                    b.Navigation("EventSubscribers");
-                });
-
-            modelBuilder.Entity("Backed.Models.Gallery", b =>
-                {
-                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("User", b =>

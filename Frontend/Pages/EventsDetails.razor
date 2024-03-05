@@ -1,6 +1,8 @@
 @page "/event/{EventId}/details"
 @inject EventService _eventService;
 @inject NavigationManager Navigation
+@inject EventService _eventService;
+@inject CommentService _commentService;
 
 <header>
     <link rel="stylesheet" href="css\eventDetails.css">
@@ -11,11 +13,17 @@
         <p>@eventModel.EventDescription</p>
         <p>Event Date: @eventModel.EventDate</p>
         @* <img src="@eventModel.EventImageUrl" alt="Event Image" /> *@
-        <video controls autoplay class="event-video">
+        <video controls  class="event-video" poster="images/funOlympics.jpeg">
             <!-- Placeholder video source -->
             <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+        <div>
+            <div class="input_container">
+           <input type="text" id="EventForm" placeholder="Add Comment...." @bind="user_comment">
+           <button @onclick="()=>AddComment(eventModel)">Add Comment</button>
+         </div>
+        </div>
     </div>
     <div class="other-events">
         <h2>Other Events</h2>
@@ -32,15 +40,22 @@
 
     public EventModel eventModel;
     public List<EventModel> OtherEvents = new List<EventModel>();
+        public string user_comment;
 
     protected override async Task OnInitializedAsync()
     {
         int id = int.Parse(EventId);
         eventModel = await _eventService.getEventDetails(id);
+        await _commentService.GetComments(id);
 
         // Simulated list of other events (replace with actual data)
         OtherEvents = await _eventService.getAllEvents();
         OtherEvents.RemoveAll(evt => evt.Id == id); // Remove the current event from the list
+    }
+
+    public async Task AddComment(EventModel eventModel)
+    {
+        await _commentService.AddComment(eventModel.Id,user_comment); 
     }
 
    

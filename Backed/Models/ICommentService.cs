@@ -8,7 +8,7 @@ namespace Backed.Services
     {
         Task<ActionResult<ResponseDTO>> GetCommentsAsync();
         Task<ActionResult<ResponseDTO>> GetCommentByIdAsync(int id);
-        Task<ActionResult<ResponseDTO>> CreateCommentAsync(CommentsDTO comment);
+        Task<ActionResult<ResponseDTO>> CreateCommentAsync(CommentsDTO comment,string jwttoken);
         Task<ActionResult<ResponseDTO>> UpdateCommentAsync(int id, Comments comment);
         Task<ActionResult<ResponseDTO>> DeleteCommentAsync(int id);
     }
