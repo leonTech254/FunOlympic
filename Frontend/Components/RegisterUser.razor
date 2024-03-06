@@ -23,6 +23,20 @@
         <label for="email">Email:</label>
         <InputText type="email" id="email" class="" @bind-Value="registerModel.Email" />
     </div>
+    <div class="input_group">
+        <select name="" id="" @bind="registerModel.country">
+            <option value="">--select country---</option>
+              @foreach (var continent in countriesByContinent)
+        {
+            <optgroup label="@continent.Key">
+                @foreach (var country in continent.Value)
+                {
+                    <option value="@registerModel.country">@country</option>
+                }
+            </optgroup>
+        }
+        </select>
+    </div>
 
    
 
@@ -40,8 +54,18 @@
 
 @code {
     private RegisterDTO registerModel = new RegisterDTO();
+    private Dictionary<string, List<string>> countriesByContinent = new Dictionary<string, List<string>>
+{
+    { "Africa", new List<string> { "Algeria", "Nigeria", "Egypt", "Ethiopia", "South Africa" } },
+    { "Asia", new List<string> { "China", "India", "Indonesia", "Pakistan", "Bangladesh" } },
+    { "Europe", new List<string> { "Russia", "Germany", "United Kingdom", "France", "Italy" } },
+    { "North America", new List<string> { "United States", "Canada", "Mexico", "Cuba", "Jamaica" } },
+    { "South America", new List<string> { "Brazil", "Argentina", "Peru", "Colombia", "Venezuela" } },
+    { "Oceania", new List<string> { "Australia", "New Zealand", "Fiji", "Papua New Guinea", "Solomon Islands" } }
+};
     private async void HandleValidSubmit()
     {
+        Console.WriteLine("ddff"+registerModel.country);
         ResponseDTO response=await AuthApiService.RegisterUserAsync(registerModel);
         @* if(response.message)
         {

@@ -30,6 +30,14 @@
     flex-direction: column;
     margin-bottom: 2rem;
 }
+.input_group select{
+    padding: 5px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid var(--secondary_color);
+    text-align: center;
+
+}
 
 .authForm .input_group input
 {

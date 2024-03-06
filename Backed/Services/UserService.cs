@@ -58,7 +58,8 @@ namespace Backed.Services
                 FirstName=registerDTO.FirstName,
                 Password=registerDTO.Password,
                 LastName=registerDTO.LastName,
-                Role="User"  
+                Role="User"  ,
+                country=registerDTO.country
             };
             
             try

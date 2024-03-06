@@ -3,6 +3,7 @@ using System;
 using DBconnection_namespace;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FunOlympic.Migrations
 {
     [DbContext(typeof(DBconn))]
-    partial class DBconnModelSnapshot : ModelSnapshot
+    [Migration("20240306121010_AddedCountryColumn")]
+    partial class AddedCountryColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,10 +76,6 @@ namespace FunOlympic.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("EventName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("playerName")
                         .IsRequired()
                         .HasColumnType("text");
 

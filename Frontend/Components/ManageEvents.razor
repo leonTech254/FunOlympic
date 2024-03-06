@@ -1,0 +1,54 @@
+
+@page "/eventform"
+@inject EventService _eventService;
+<header>
+    <link rel="stylesheet" href="css/manageEvents.css">
+</header>
+<div class="event-form" Model="@eventModel" >
+   
+
+    <div class="form-group">
+        <label for="eventName">Event Name:</label>
+        <input id="eventName" class="form-control" @bind="eventModel.EventName" />
+    </div>
+
+    <div class="form-group">
+        <label for="eventDate">Event Date:</label>
+        <input type="datetime-local"  id="eventDate" class="form-control"  @bind="eventModel.EventDate" />
+    </div>
+
+    <div class="form-group">
+        <label for="eventImageUrl">Event Image URL:</label>
+        <input id="eventImageUrl" class="form-control" @bind="eventModel.EventImageUrl" />
+    </div>
+
+    <div class="form-group">
+        <label for="eventDescription">Event Description:</label>
+        <textarea id="eventDescription" class="form-control" @bind="eventModel.EventDescription" />
+    </div>
+
+    <div class="form-group">
+        <label for="playerName">Player Name:</label>
+        <input id="playerName" class="form-control" @bind="eventModel.PlayerName" />
+    </div>
+
+    <button type="submit" class="btn btn-primary" @onclick=HandleValidSubmit>Create Event</button>
+
+    @if (!string.IsNullOrEmpty(submitErrorMessage))
+    {
+        <div class="alert alert-danger">@submitErrorMessage</div>
+    }
+</div>
+
+@code {
+    private EventModel eventModel = new EventModel();
+    private bool isSubmitting = false;
+    private string submitErrorMessage = "";
+
+    private async Task HandleValidSubmit()
+    {
+        await _eventService.AddEvent(eventModel);
+        eventModel=new EventModel();
+      
+    }
+}

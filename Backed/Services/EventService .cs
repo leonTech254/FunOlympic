@@ -38,10 +38,11 @@ namespace Backed.Services
         {
             Event @event= new Event()
             {
-                EventDate=eventDTO.EventDate,
+                EventDate=eventDTO.EventDate.ToUniversalTime(),
                 EventDescription=eventDTO.EventDescription,
                 EventImageUrl=eventDTO.EventImageUrl,
                 EventName=eventDTO.EventName,
+                playerName=eventDTO.playerName
             };
             _context.Events.Add(@event);
             await _context.SaveChangesAsync();

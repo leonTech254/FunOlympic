@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Json;
 using System.Text.Json;
-using Frontend.Models; 
+using Frontend.Models;
+using Frontend.Utils;
 namespace Frontend.Services
 {
     public class EventService
@@ -9,12 +11,14 @@ namespace Frontend.Services
         public String _baseURL;
         // public List<EventModel> Events { get; private set; }
         public HttpClient _client;
+        public readonly PopUpMessages _popUpMessages;
 
-        public EventService()
+        public EventService(PopUpMessages popUpMessages)
         {
         //    _httpContent= new HttpClient();
              _client=new HttpClient(); 
-             _baseURL="http://localhost:5215/api/v1/";      
+             _baseURL="http://localhost:5215/api/v1/";  
+             _popUpMessages=popUpMessages;    
            
         }
 
@@ -62,9 +66,37 @@ namespace Frontend.Services
 
         }
 
-        public void AddEvent(EventModel newEvent)
+
+
+        
+
+        public async Task AddEvent(EventModel eventModel)
         {
-            // Events.Add(newEvent);
+              try
+        {
+           
+
+            // Submit the form data to the API endpoint
+            
+            var response = await _client.PostAsJsonAsync("http://localhost:5215/api/v1/events", eventModel);
+
+            if (response.IsSuccessStatusCode)
+            {
+                eventModel = new EventModel();
+                await _popUpMessages.sweetAlert("Event Added Successfully","Events","success");
+            }
+            else
+            {
+
+                await _popUpMessages.sweetAlert("Failed to create event. Please try again later.","Events","error");
+                
+            }
+        }
+        catch (Exception ex)
+        {
+             await _popUpMessages.sweetAlert("An error occurred while processing your request. Please try again later.","Events","error");
+        }
+        
         }
 
         // public void UpdateEvent(EventModel updatedEvent)
