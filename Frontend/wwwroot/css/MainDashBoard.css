@@ -18,8 +18,15 @@
     gap: 1rem;
     height: 10rem;
     border-radius: .5rem;
+    cursor: pointer;
 
 }
+.dashboard_card:active
+{
+    transform: scale(.9);
+    background-color: rgba(0, 255, 255, 0.363);
+}
+
 .dashboard_card .labels
 {
     font-weight: bold;
@@ -148,8 +155,9 @@
     .dashboard_card 
     {
         width: 95%;
-    }
 
+    }
+   
 .graph_container
 {
   display: flex ;

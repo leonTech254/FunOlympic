@@ -1,24 +1,25 @@
 @inject EventService _eventService;
 @inject SubscribeService _subscribeService;
+@inject NavigationManager _navigationManager;
 
 <header>
     <link rel="stylesheet" href="css/MainDashBoard.css">
 </header>
 
 <div class="dashboard_container">
-    <div class="dashboard_card">
+    <div class="dashboard_card" @onclick="gotTo">
         <span class="totals">@statistics?.totalEvent</span> 
         <span class="labels">Total Events</span> 
     </div>
-    <div class="dashboard_card">
+    <div class="dashboard_card"  @onclick="()=>filterEvents(0)">
         <span class="totals">@statistics?.subscribed</span>
-        <span class="labels">Subscribed</span>
+        <span class="labels">Total Subscribed</span>
     </div>
-    <div class="dashboard_card">
-        <span class="totals">0</span>
-        <span class="labels">Watched</span>
+    <div class="dashboard_card" @onclick="()=>filterEvents(2)">
+        <span class="totals">@statistics?.ActiveSubsribed</span>
+        <span class="labels">Active subscribtion</span>
     </div>
-    <div class="dashboard_card">
+    <div class="dashboard_card" @onclick="()=>filterEvents(1)">
         <span class="totals">@statistics?.cancelledEvent</span>
         <span class="labels">Canceled</span>
     </div>
@@ -37,7 +38,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var subscription in subscriptions)
+            @foreach (var subscription in Filtered)
             {
                 <tr>
                     <td>@subscription.Id</td>
@@ -62,15 +63,18 @@
         public int totalEvent { get; set; }
         public int subscribed { get; set; }
         public int cancelledEvent {get;set;}
+        public int ActiveSubsribed {get;set;}
     }
 
     public Statistics statistics;
     public List<Subscription> subscriptions;
-        public List<EventModel> allEvents;
+    public List<EventModel> allEvents;
+    public List<Subscription> Filtered;
 
     protected override async Task OnInitializedAsync()
     {
        await GetData();
+       filterEvents(0);
     }
     public async Task GetData()
     {
@@ -80,7 +84,8 @@
         {
             totalEvent = allEvents.Count(),
             subscribed = subscriptions.Count(),
-            cancelledEvent=subscriptions.Where(e=>e.IsCancelled==true).ToList().Count()
+            cancelledEvent=subscriptions.Where(e=>e.IsCancelled==true).ToList().Count(),
+            ActiveSubsribed=subscriptions.Where(e=>e.IsCancelled==false).ToList().Count(),
 
         };
 
@@ -89,6 +94,7 @@
     {
         await _subscribeService.CancelEvent(evntId);
         await GetData();
+        
         StateHasChanged();
     }
 
@@ -96,6 +102,30 @@
     {
        EventModel eventModel= allEvents.Find(e=>e.Id==evevenIt);
        return eventModel;
+
+    }
+
+    public void gotTo()
+    {
+        _navigationManager.NavigateTo("/events");
+
+    }
+
+    public void filterEvents(int toshow)
+    {
+        if(toshow==0)
+        {
+            Filtered= subscriptions;
+        }else if(toshow==1)
+        {
+            Filtered= subscriptions.Where(e=>e.IsCancelled==true).ToList();
+        }else 
+        {
+            Filtered=subscriptions.Where(e=>e.IsCancelled==false).ToList();
+        }
+
+      
+
 
     }
 }
