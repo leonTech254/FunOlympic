@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Frontend.Models;
 using Frontend.Utils;
 
 namespace Frontend.Services
@@ -20,6 +21,7 @@ namespace Frontend.Services
         public SubscribeService(TokenServices tokenServices,PopUpMessages popUpMessages)
         {
             _baseUrl="http://localhost:5215/api/v1/events/eventId/subscribers";
+           
             _client=new HttpClient();
             _tokenServices=tokenServices;
             _popUpMessages=popUpMessages;
@@ -40,6 +42,23 @@ namespace Frontend.Services
              await _popUpMessages.sweetAlert("Failed to add to playlist","Subscription","error");
            }
 
+
+        }
+
+
+        public async Task<List<Subscription>?> GetAllMyEvents()
+        {
+         await _tokenServices.AddTokenToRequest(_client);
+         var response= await _client.GetAsync(_baseUrl.Replace("eventId",$"{1}")+"/myEvents");
+         if(response.IsSuccessStatusCode){
+            string jsonString=await response.Content.ReadAsStringAsync();
+            ResponseDTO responseDTO = JsonSerializer.Deserialize<ResponseDTO>(jsonString);
+          List<Subscription> subscriptions=  JsonSerializer.Deserialize<List<Subscription>>(responseDTO.responseData.ToString());
+          return subscriptions;
+         
+         }else{
+         return null;
+         }
 
         }
     }

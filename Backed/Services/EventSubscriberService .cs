@@ -30,6 +30,15 @@ namespace Backed.Services
             return new ResponseDTO { message = "Success", responseData = eventSubscribers };
         }
 
+        public async Task<ActionResult<ResponseDTO>> GetMyEvents(string jwtToken ){
+       string userId= _jwt.GetUserIdFromToken(jwtToken);
+        var eventSubscribers = await _context.EventSubscribers.Where(e=>e.UserId==int.Parse(userId)).ToListAsync();
+         return new ResponseDTO { message = "Success", responseData = eventSubscribers };
+
+
+        }
+
+
         public async Task<ActionResult<ResponseDTO>> AddEventSubscriberAsync(int eventId, EventSubscribersDTO eventSubscribersDTO,string jwtToken)
         {
             string userId=_jwt.GetUserIdFromToken(jwtToken);

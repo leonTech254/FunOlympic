@@ -1,0 +1,95 @@
+.dashboard_container
+{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    padding:20px 90px;
+    gap: 1rem;
+}
+.dashboard_card
+{
+    padding: 20px;
+    box-shadow: 0 0 5px #00000085;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    height: 10rem;
+    border-radius: .5rem;
+
+}
+.dashboard_card .labels
+{
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #000;
+
+}
+.dashboard_card .totals
+{
+    font-size: 3.5rem;
+    color: var(--secondary_color);
+    font-weight: bold;
+}
+
+.graph_container
+{
+  display: grid ;
+  grid-template-columns: repeat(2,1fr);
+  grid-template-areas: "pie mybids";
+  padding: 10px;  
+}
+.latest_bid
+{
+    grid-area: mybids;
+    width: 90%;
+    margin: auto;
+}
+.graph_container .graph_container
+{
+    width: 100%;
+    background-color: yellow;
+
+}
+.graph_container #myChart
+{
+    /* background-color: red; */
+    margin: auto;
+    
+}
+
+
+
+
+/* mobile view */
+@media (max-width:750px)
+{
+    .dashboard_container
+    {
+        grid-template-columns: repeat(1,1fr);
+        padding:10px 10px;
+    }
+    .dashboard_card 
+    {
+        width: 95%;
+    }
+
+.graph_container
+{
+  display: flex ;
+  grid-template-columns:unset;
+  flex-direction: column;
+  grid-template-areas: "pie mybids";
+  padding: 10px;   
+}
+.graph_container .pie_chart
+{
+    /* background-color: green; */
+    display: flex;
+    justify-content: center;
+    padding:0;
+}
+
+}

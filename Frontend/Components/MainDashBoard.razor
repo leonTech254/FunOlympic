@@ -1,1 +1,46 @@
-<div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore optio voluptatem omnis assumenda perspiciatis enim quos id saepe reiciendis soluta. Iure distinctio eos autem aperiam similique sint accusamus laudantium nisi.</div>
+@inject EventService _eventService;
+@inject SubscribeService _subscribeService;
+
+<header>
+    <link rel="stylesheet" href="css/MainDashBoard.css">
+</header>
+
+<div class="dashboard_container">
+    <div class="dashboard_card">
+        <span class="totals">@statistics?.totalEvent</span> <!-- Added null conditional operator -->
+        <span class="labels">Total Events</span> <!-- Changed label from "Total Games" to "Total Events" -->
+    </div>
+    <div class="dashboard_card">
+        <span class="totals">@statistics?.subscribed</span>
+        <span class="labels">Subscribed</span>
+    </div>
+    <div class="dashboard_card">
+        <span class="totals">0</span>
+        <span class="labels">Watched</span>
+    </div>
+    <div class="dashboard_card">
+        <span class="totals">0</span>
+        <span class="labels">Canceled</span>
+    </div>
+</div>
+
+@code {
+    public class Statistics
+    {
+        public int totalEvent { get; set; }
+        public int subscribed { get; set; }
+    }
+
+    public Statistics statistics;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var allEvents = await _eventService.getAllEvents();
+        var mySubscription=await _subscribeService.GetAllMyEvents();
+        statistics = new Statistics()
+        {
+            totalEvent = allEvents.Count(),
+            subscribed=mySubscription.Count()
+        };
+    }
+}

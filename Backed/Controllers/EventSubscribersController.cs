@@ -24,6 +24,13 @@ namespace Backed.Controllers
         {
             return await _eventSubscriberService.GetEventSubscribersAsync(eventId);
         }
+        [HttpGet("myEvents")]
+        public async Task<ActionResult<ResponseDTO>> myEvents()
+        {
+             string jwtToken = HttpContext.Request.Headers["Authorization"];
+            return await _eventSubscriberService.GetMyEvents(jwtToken);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<ResponseDTO>> AddEventSubscriber(int eventId, EventSubscribersDTO eventSubscriber)
@@ -32,7 +39,7 @@ namespace Backed.Controllers
             return await _eventSubscriberService.AddEventSubscriberAsync(eventId, eventSubscriber,jwtToken);
         }
 
-        [HttpDelete("{userId}")]
+        [HttpDelete("/{userId}")]
         public async Task<ActionResult<ResponseDTO>> RemoveEventSubscriber(int eventId, int userId)
         {
             return await _eventSubscriberService.RemoveEventSubscriberAsync(eventId, userId);
