@@ -4,6 +4,7 @@
 @inject EventService _eventService;
 @inject CommentService _commentService;
 @inject SubscribeService _subscribeService;
+@inject PopUpMessages _popUpMessages;
 
 <header>
     <link rel="stylesheet" href="css\eventDetails.css">
@@ -45,7 +46,6 @@
         </div>
     </div>
     <div class="other-events">
-        <h2>Other Events</h2>
         <div class="btn_container_links">
  @foreach (var evt in OtherEvents)
         {
@@ -114,7 +114,17 @@ public async Task seeDetails(int evID)
 
     public async Task SubscribeEvent(EventModel eventModel)
     {
+       var eventDate=eventModel.EventDate;
+       TimeSpan timeSpan=eventDate-DateTime.Now;
+       if(timeSpan.TotalHours<24)
+       {
+        await _popUpMessages.sweetAlert($"You can't subscribe to this event. You need to subscribe to the event a day earlier.{(int)Math.Round(timeSpan.TotalHours)} Hours Remaining for the event to start", "Subscription", "error");
+       }else
+       {
        await _subscribeService.subscibeToEvent(eventModel.Id);
+
+       }
+      
 
     }
 
