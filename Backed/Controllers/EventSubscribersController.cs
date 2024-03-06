@@ -44,5 +44,12 @@ namespace Backed.Controllers
         {
             return await _eventSubscriberService.RemoveEventSubscriberAsync(eventId, userId);
         }
+        [HttpGet("cancel/")]
+        public async Task<ActionResult<ResponseDTO>> CancelPost(int eventId)
+        {
+        string jwtToken = HttpContext.Request.Headers["Authorization"];
+
+            return await _eventSubscriberService.CancelGet(eventId,jwtToken);
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Backed.Services
         Task<ActionResult<ResponseDTO>> AddEventSubscriberAsync(int eventId, EventSubscribersDTO eventSubscriber,string jwtToken);
         Task<ActionResult<ResponseDTO>> RemoveEventSubscriberAsync(int eventId, int userId);
         Task<ActionResult<ResponseDTO>> GetMyEvents(string jwtToken);
-        
+        Task<ActionResult<ResponseDTO>> CancelGet(int eventId, string? jwtToken);
     }
 
    

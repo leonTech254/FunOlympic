@@ -7,8 +7,8 @@
 
 <div class="dashboard_container">
     <div class="dashboard_card">
-        <span class="totals">@statistics?.totalEvent</span> <!-- Added null conditional operator -->
-        <span class="labels">Total Events</span> <!-- Changed label from "Total Games" to "Total Events" -->
+        <span class="totals">@statistics?.totalEvent</span> 
+        <span class="labels">Total Events</span> 
     </div>
     <div class="dashboard_card">
         <span class="totals">@statistics?.subscribed</span>
@@ -19,28 +19,83 @@
         <span class="labels">Watched</span>
     </div>
     <div class="dashboard_card">
-        <span class="totals">0</span>
+        <span class="totals">@statistics?.cancelledEvent</span>
         <span class="labels">Canceled</span>
     </div>
 </div>
+
+<div class="Subscriptions">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Event ID</th>
+                <th>Event Name</th>
+                <th>Event Date</th>
+                <th>Event status </th>
+                <th>Action</th> 
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subscription in subscriptions)
+            {
+                <tr>
+                    <td>@subscription.Id</td>
+                    <td>@subscription.EventId</td>
+                    <td>@getEventName(@subscription.EventId).EventName</td>
+                    <td>@getEventName(@subscription.EventId).EventDate</td>
+                    <td>@(subscription.IsCancelled?"cancelled":"Active")</td>
+                    
+                    <td>
+                        <button disabled="@subscription.IsCancelled"  @onclick="() => CancelSubscription(subscription.EventId)">@(subscription.IsCancelled?"Event Canceled":"Cancel Event")</button> 
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 
 @code {
     public class Statistics
     {
         public int totalEvent { get; set; }
         public int subscribed { get; set; }
+        public int cancelledEvent {get;set;}
     }
 
     public Statistics statistics;
+    public List<Subscription> subscriptions;
+        public List<EventModel> allEvents;
 
     protected override async Task OnInitializedAsync()
     {
-        var allEvents = await _eventService.getAllEvents();
-        var mySubscription=await _subscribeService.GetAllMyEvents();
+       await GetData();
+    }
+    public async Task GetData()
+    {
+         allEvents = await _eventService.getAllEvents();
+        subscriptions = await _subscribeService.GetAllMyEvents();
         statistics = new Statistics()
         {
             totalEvent = allEvents.Count(),
-            subscribed=mySubscription.Count()
+            subscribed = subscriptions.Count(),
+            cancelledEvent=subscriptions.Where(e=>e.IsCancelled==true).ToList().Count()
+
         };
+
+    }
+    private async void CancelSubscription(int evntId)
+    {
+        await _subscribeService.CancelEvent(evntId);
+        await GetData();
+        StateHasChanged();
+    }
+
+    public EventModel getEventName(int evevenIt)
+    {
+       EventModel eventModel= allEvents.Find(e=>e.Id==evevenIt);
+       return eventModel;
+
     }
 }

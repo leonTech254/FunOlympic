@@ -15,6 +15,8 @@ namespace Backed.Models
     public int UserId { get; set; }
     public int EventId { get; set; }
 
+    public bool IsCancelled {get;set;}
+
     [ForeignKey("UserId")]
     public User User { get; set; }
 

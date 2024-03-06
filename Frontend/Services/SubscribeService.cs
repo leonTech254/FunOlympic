@@ -45,15 +45,32 @@ namespace Frontend.Services
 
         }
 
+        public async Task CancelEvent(int eventId)
+        {
+            var response= await _client.GetAsync(_baseUrl.Replace("eventId",$"{eventId}")+"/cancel");
+            if(response.IsSuccessStatusCode)
+            {
+                await _popUpMessages.sweetAlert("Event Removed Successfull","Subscription","success");
+            }else
+            {
+                await _popUpMessages.sweetAlert("Error canceling the Event","Subscription","error"); 
+            }
+
+        }
+
 
         public async Task<List<Subscription>?> GetAllMyEvents()
         {
+           var options = new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true
+    };
          await _tokenServices.AddTokenToRequest(_client);
          var response= await _client.GetAsync(_baseUrl.Replace("eventId",$"{1}")+"/myEvents");
          if(response.IsSuccessStatusCode){
             string jsonString=await response.Content.ReadAsStringAsync();
-            ResponseDTO responseDTO = JsonSerializer.Deserialize<ResponseDTO>(jsonString);
-          List<Subscription> subscriptions=  JsonSerializer.Deserialize<List<Subscription>>(responseDTO.responseData.ToString());
+            ResponseDTO responseDTO = JsonSerializer.Deserialize<ResponseDTO>(jsonString,options);
+          List<Subscription> subscriptions=  JsonSerializer.Deserialize<List<Subscription>>(responseDTO.responseData.ToString(),options);
           return subscriptions;
          
          }else{

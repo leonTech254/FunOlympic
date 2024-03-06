@@ -45,7 +45,8 @@ namespace Backed.Services
             EventSubscribers eventSubscriber= new EventSubscribers()
             {
                 EventId=eventId,
-                UserId=int.Parse(userId)
+                UserId=int.Parse(userId),
+                IsCancelled=false
                 
             };
             eventSubscriber.EventId = eventId;
@@ -72,6 +73,24 @@ namespace Backed.Services
             return new ResponseDTO { message = "Event subscriber removed successfully", responseData = null };
         }
 
-        
+        public async Task<ActionResult<ResponseDTO>> CancelGet(int eventId, string? jwtToken)
+        {
+            string userId=_jwt.GetUserIdFromToken(jwtToken);
+            List<EventSubscribers> eventSubscribers=await _context.EventSubscribers.ToListAsync();
+          EventSubscribers eventSubscriber=eventSubscribers.FirstOrDefault(e=>e.EventId==eventId && e.UserId==int.Parse(userId));
+            if(eventSubscriber!=null)
+            { 
+               eventSubscriber.IsCancelled=!eventSubscriber.IsCancelled;
+               _context.SaveChanges();
+               return new ResponseDTO() { message="Deleted Successfull",responseData=null};
+            }else
+            {
+                return new ResponseDTO();
+            }
+
+            
+            
+           
+        }
     }
 }
