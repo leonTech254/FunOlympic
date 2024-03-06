@@ -78,6 +78,7 @@ overflow: hidden;
     background: transparent;
     border: none;
     outline: none;
+    color: #fff;
 }
 .input_container input::placeholder
 {
@@ -107,4 +108,15 @@ flex-direction: column;
     text-align: right;
     font-style: italic;
     color: var(--secondary_color);
+}
+.add_events_btn
+{
+    padding: 10x;
+    width: 100%;
+    margin-top: .5rem;
+    height: 2.5rem;
+    background-color: red;
+    border-radius: .5rem;
+    color: #fff;
+    font-weight: bold;
 }

@@ -3,10 +3,12 @@
 @inject NavigationManager Navigation
 @inject EventService _eventService;
 @inject CommentService _commentService;
+@inject SubscribeService _subscribeService;
 
 <header>
     <link rel="stylesheet" href="css\eventDetails.css">
 </header>
+<NavBar isBackground=true></NavBar>
 <div class="event-container">
     <div class="event-details">
         <h2>@eventModel.EventName</h2>
@@ -23,6 +25,7 @@
            <input type="text" id="EventForm" placeholder="Add Comment...." @bind="user_comment">
            <button @onclick="()=>AddComment(eventModel)">Add Comment</button>
          </div>
+         <button class="add_events_btn" @onclick="()=>SubscribeEvent(eventModel)">Add Game</button>
          <div class="allComments">
             <ul>
                 @foreach(var comment in commentsList)
@@ -87,6 +90,12 @@
         await _commentService.AddComment(eventModel.Id,user_comment); 
         user_comment="";
         await ChangeState();
+    }
+
+    public async Task SubscribeEvent(EventModel eventModel)
+    {
+       await _subscribeService.subscibeToEvent(eventModel.Id);
+
     }
 
    

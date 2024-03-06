@@ -28,7 +28,8 @@ namespace Backed.Controllers
         [HttpPost]
         public async Task<ActionResult<ResponseDTO>> AddEventSubscriber(int eventId, EventSubscribersDTO eventSubscriber)
         {
-            return await _eventSubscriberService.AddEventSubscriberAsync(eventId, eventSubscriber);
+            string jwtToken = HttpContext.Request.Headers["Authorization"];
+            return await _eventSubscriberService.AddEventSubscriberAsync(eventId, eventSubscriber,jwtToken);
         }
 
         [HttpDelete("{userId}")]

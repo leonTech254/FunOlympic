@@ -7,7 +7,7 @@ namespace Backed.Services
     public interface IEventSubscriberService
     {
         Task<ActionResult<ResponseDTO>> GetEventSubscribersAsync(int eventId);
-        Task<ActionResult<ResponseDTO>> AddEventSubscriberAsync(int eventId, EventSubscribersDTO eventSubscriber);
+        Task<ActionResult<ResponseDTO>> AddEventSubscriberAsync(int eventId, EventSubscribersDTO eventSubscriber,string jwtToken);
         Task<ActionResult<ResponseDTO>> RemoveEventSubscriberAsync(int eventId, int userId);
     }
 
