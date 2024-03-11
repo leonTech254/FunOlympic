@@ -38,6 +38,9 @@
             </tr>
         </thead>
         <tbody>
+            @if(Filtered!=null)
+            {
+
             @foreach (var subscription in Filtered)
             {
                 <tr>
@@ -52,6 +55,8 @@
                     </td>
                 </tr>
             }
+                        }
+            
         </tbody>
     </table>
 </div>

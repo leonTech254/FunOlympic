@@ -1,1 +1,31 @@
-<ManageEvents></ManageEvents>
+<style>
+    .pg_wrapper
+    {
+        display: grid;
+        grid-template-columns: repeat(8,1fr);
+        grid-template-areas: "a a a b b b b b" ;
+        gap: 1rem;
+        
+    }
+    .a{
+        grid-area: a;
+
+    }
+    .b
+    {
+      grid-area: b;
+        
+    }
+
+</style>
+
+<div class="pg_wrapper">
+    <div class="a">
+        <ManageEvents></ManageEvents>
+    </div>
+    <div class="b">
+        <EventMngDisplay></EventMngDisplay>
+    </div>
+
+
+</div>

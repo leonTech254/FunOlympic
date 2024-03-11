@@ -44,6 +44,19 @@ namespace Frontend.Services
                 
         }
 
+        public async Task DeleteEvent(int EventId)
+        {
+         var response= await _client.DeleteAsync(_baseURL+"events/"+EventId);
+         if(response.IsSuccessStatusCode)
+         {
+            await _popUpMessages.sweetAlert("Event Delete Successfully","Event","success");
+         }else
+         {
+             await _popUpMessages.sweetAlert("Event Deletion Error","Event","error");
+         }
+            
+        } 
+
 
         public async Task<EventModel> getEventDetails(int eventId)
         {

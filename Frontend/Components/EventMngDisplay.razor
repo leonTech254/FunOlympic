@@ -1,0 +1,78 @@
+@inject EventService _eventService;
+
+<style>
+    .awesome-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+    
+        .awesome-table th,
+        .awesome-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+    
+        .awesome-table th {
+            background-color: #f2f2f2;
+        }
+    
+        .awesome-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+</style>
+
+@if (eventModels != null && eventModels.Count > 0)
+{
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Event Date</th>
+                <th>Player Name</th>
+                <th>Event Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var eventModel in eventModels)
+            {
+                <tr>
+                    <td>@eventModel.Id</td>
+                    <td>@eventModel.EventDate</td>
+                    <td>@eventModel.PlayerName</td>
+                    <td>@eventModel.EventName</td>
+                    <td><Button class="btn btn-danger" @onclick="()=>deleteEvent(eventModel)">Delete</Button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No events available.</p>
+}
+
+
+
+@code
+{
+    List<EventModel> eventModels;
+    protected override async Task OnInitializedAsync()
+    {
+       await GetAllEvents();
+
+    }
+    public async Task GetAllEvents()
+    {
+        eventModels=await _eventService.getAllEvents();
+    }
+
+    public async Task deleteEvent(EventModel eventModel)
+    {
+        await _eventService.DeleteEvent(eventModel.Id);
+        await GetAllEvents();
+
+
+    }
+}
