@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css\eventDetails.css">
 </header>
 <NavBar isBackground=true></NavBar>
+<MatchPlayModal @ref="matchPlayModal" EventModel="eventModel"></MatchPlayModal>
 <div class="event-container">
     <div class="event-details">
         <h2>@eventModel.EventName</h2>
@@ -29,6 +30,9 @@
          <button class="add_events_btn" @onclick="()=>SubscribeEvent(eventModel)">Add Game</button>
          <div class="allComments">
             <ul>
+                @if(commentsList!=null)
+                {
+
                 @foreach(var comment in commentsList)
                 {
                 <li>
@@ -39,6 +43,7 @@
 
                 </li>
                 }
+                             }
              
             </ul>
             
@@ -52,13 +57,11 @@
             <p><button class="o_event_name" @onclick="()=>seeDetails(evt.Id)">@evt.EventName</button></p>
         }
         </div>
-        <div class="match_player">
+        <div class="match_player" @onclick="ShowMatchPlayModal">
            <img src="images/user.png" alt=""> 
            <p>Player:@eventModel.PlayerName</p>
         </div>
 
-       
-       
     </div>
      
 </div>
@@ -67,10 +70,21 @@
     [Parameter]
     public string EventId { get; set; }
 
-    public EventModel eventModel;
+    public EventModel eventModel=new EventModel();
     public List<EventModel> OtherEvents = new List<EventModel>();
     public string user_comment; 
     public List<CommentModel> commentsList;
+
+
+  MatchPlayModal matchPlayModal; // Reference to the MatchPlayModal component
+
+    // Method to show the MatchPlayModal component
+    private void ShowMatchPlayModal()
+    {
+        Console.WriteLine("hello leon");
+        matchPlayModal.Show();
+    }
+        
         
 
     protected override async Task OnInitializedAsync()

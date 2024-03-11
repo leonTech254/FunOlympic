@@ -1,0 +1,136 @@
+<!-- MatchPlayModal.razor -->
+<div class="modal-overlay" style="z-index: 1000; @ModalDisplay">
+    <div class="my_model">
+        <span class="close" @onclick="CloseModal">×</span>
+        <div class="cont">
+              <div class="match_player" >
+                        <h2>Player</h2>
+                               <img src="images/user.png" alt=""> 
+                               <p>Player:@EventModel.PlayerName</p>
+                            </div>
+                    <div class="image-container">
+                        <div class="image-wrapper">
+                            <img src="https://people.com/thmb/9N2-ZdWttjekKNJsiRDFT7-UcyM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(749x0:751x2)/simone-biles-returning-to-competition-062823-02-2ddc3fcdd6b54ee48df43fa032c29089.jpg" alt=""> 
+                            <p>Image 1</p>
+                        </div>
+                        <div class="image-wrapper">
+                            <img src="https://cdn.britannica.com/84/192384-050-DC9B05D8/Simone-Biles-balance-beam-Rio-de-Janeiro-2016.jpg" alt="">
+                            <p>Image 2</p>
+                        </div>
+                        <div class="image-wrapper">
+                            <img src="https://e3.365dm.com/23/08/1600x900/skynews-simone-biles-us-gymnastic_6265542.jpg?20230828063653" alt="">
+                            <p>Image 3</p>
+                        </div>
+                        <div class="image-wrapper">
+                            <img src="https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F267ebdba-ef24-11eb-8f01-2c678acbb979.jpg?crop=4481%2C2987%2C0%2C0" alt="">
+                       <p>Image 4</p>
+                        </div>
+                    </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .cont
+    {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        grid-template-areas: "card img img";
+        gap: 1rem;
+    }
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .my_model {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        width: 50%;
+        max-height: 80%;
+        overflow: auto;
+        
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    .image-container {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: .2rem;
+        width: 100% !important;
+        grid-area: img;
+        padding: 10px;
+    }
+
+    .image-wrapper {
+        text-align: center;
+        height:fit-content;
+        width: 100%;
+        background-color: red;
+        height: 10rem;
+        background-color: black;
+        position: relative;
+
+
+    }
+    .image-container p{
+         position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-weight: bold;
+            background-color: rgba(13, 13, 43, 0.671);
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        
+    }
+
+    .image-wrapper img {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+        height: 100%;
+    }
+  
+</style>
+
+@code {
+    [Parameter]
+    public EventModel EventModel { get; set; }
+
+    private bool IsModalVisible { get; set; }
+
+    private void CloseModal()
+    {
+        IsModalVisible = false;
+    }
+
+    private string ModalDisplay => IsModalVisible ? "" : "display: none;";
+
+    public void Show()
+    {
+        IsModalVisible = true;
+        StateHasChanged(); 
+    }
+}
