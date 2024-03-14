@@ -15,6 +15,8 @@ builder.Services.AddScoped<TokenServices>();
 builder.Services.AddScoped<PopUpMessages>();
 builder.Services.AddScoped<CommentService>();
 builder.Services.AddScoped<SubscribeService>();
+builder.Services.AddScoped<DummyDataService>();
+
 
 
 await builder.Build().RunAsync();

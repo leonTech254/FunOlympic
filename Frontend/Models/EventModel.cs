@@ -8,6 +8,7 @@ namespace Frontend.Models
     public string EventImageUrl { get; set; }
     public string EventDescription { get; set; }
     public string PlayerName {get;set;}
+    public string EventVenue {get;set;}
         
     }
 }
