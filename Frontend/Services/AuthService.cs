@@ -95,12 +95,34 @@ namespace Frontend.Services
             return null;
         }
 
-        public async Task<ResponseDTO> ResetPasswordAsync(string email)
+        public async Task UpdateMyProfilePic(UserModel user)
         {
-            // Implement password reset logic here
-            return null;
+            RegisterDTO registerDTO= new RegisterDTO(){
+                Password=user.Password,
+                country="",
+                Email=user.Email,
+                LastName="",
+                FirstName="",
+                DOB="",
+                Gender="",
+                Role=""    
+            
+            };
+
+        
+         var response =  await _client.PutAsJsonAsync(_baseURL+$"users/{user.user_id}",registerDTO);
+         if(response.IsSuccessStatusCode)
+         {
+            await _popUpMessages.sweetAlert("Updated successfully","Authentication","success");
+         }else
+         {
+         await _popUpMessages.sweetAlert("Error Updating Details","Authentication","error");
+
+         }
+
         }
 
-        // You can continue adding more authentication-related methods as needed
+     
+
     }
 }

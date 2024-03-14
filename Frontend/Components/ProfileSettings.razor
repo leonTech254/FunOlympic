@@ -11,9 +11,9 @@
 {
 <div class=profiile_out_container>
 <div class="profile_pic_container">
-   <img src="@(user.ProfileUrl == "default" ? "images/user_avator.png" : user.ProfileUrl)" alt="">
+   <img src="images/user.png" alt="">
   <InputFile  OnChange="HandleImageChange" type="file" id="IamgeUrlNew" style="display: none;"/>
-  <label class="btn text-uppercase btn-primary btn-sm" for="IamgeUrlNew">upload image</label>
+  @* <label class="btn text-uppercase btn-primary btn-sm" for="IamgeUrlNew">upload image</label> *@
 
     <ul>
         <li><span>username: @user.username</span></li>
@@ -38,13 +38,15 @@
             </div>
              <div class="input_group">
                 <label for="">passowrd</label>
-                <input type="password">
+                <input type="password" @bind="@user.Password">
             </div>
+            
+            
          
 
     </ul>
     <div class="btn_container">
- <button class="btn">Update Profile</button>
+ <button class="btn" @onclick="UpdateProfile">Update Profile</button>
     </div>
    
 </div>
@@ -66,9 +68,9 @@
 
     }
 
-    public void UpdateProfile()
+    public  async void UpdateProfile()
     {
-        @* _iJSRuntime.InvokeVoidAsync("UpdateProfile"); *@
+        await _authApiService.UpdateMyProfilePic(user);
 
 
     }
@@ -86,9 +88,6 @@
                     profileurl=imageUrl
                 }; *@
 
-            
-           
-          
             Console.WriteLine(imageUrl);
             @* await _authApiService.UpdateMyProfilePic(profile); 
             await _popUpMessages.sweetAlert("Profile Image Uploaded Successfully","Success","success"); *@
@@ -97,5 +96,7 @@
             }
         
         }
+
+    
 
 }
