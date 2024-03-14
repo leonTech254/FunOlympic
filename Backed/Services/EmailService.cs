@@ -21,7 +21,7 @@ namespace Backed.Services
 		}
         internal async Task SendWelcomeMessage(User userDetails)
         {
-            string subject = "Welcome to AuctionHouse";
+            string subject = "Welcome to FunOlympics";
             string body = $@"<!DOCTYPE html>
                     <html lang=""en"">
                     <head>
@@ -96,7 +96,7 @@ namespace Backed.Services
 			try
 			{
 				var message = new MimeMessage();
-				message.From.Add(new MailboxAddress("AuctionHouse", "leonteqsec@gmail.com"));
+				message.From.Add(new MailboxAddress("FUnOlympics", "leonteqsec@gmail.com"));
 				message.To.Add(new MailboxAddress(username, useremail));
 				message.Subject = subject;
 				// message.Body = new TextPart("plain")

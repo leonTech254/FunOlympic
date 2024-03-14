@@ -13,5 +13,6 @@ namespace Backed.Models
         public string EventImageUrl { get; set; }
         public string EventDescription { get; set; }
         public string playerName{get;set;}
+        public string EventVenue {get;set;}
     }
 }

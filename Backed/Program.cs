@@ -118,7 +118,9 @@ using (var scope = app.Services.CreateScope())
             Email = "admin@gmail.com",
             country = "USA",
             Password = "Admin@123", 
-            Role = "Admin"
+            Role = "Admin",
+            DOB="DOB",
+            Gender="Male"
         };
 
         dbContext.Users.Add(adminUser);
@@ -138,8 +140,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // Add this line to enable authentication
-app.UseAuthorization(); // Add this line to enable authorization
+app.UseAuthentication(); 
+app.UseAuthorization(); 
 
 app.MapControllers();
 
