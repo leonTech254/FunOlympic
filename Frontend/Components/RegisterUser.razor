@@ -20,9 +20,17 @@
     </div>
     
     <div class="input_group">
-        <label for="email">Email:</label>
-        <InputText type="email" id="email" class="" @bind-Value="registerModel.Email" />
+        <label for="Gender">Gender:</label> 
+        <InputText type="text" id="Gender" class="" @bind-Value="registerModel.Gender"/>
     </div>
+    <div class="input_group">
+            <label for="DOB">DOB:</label>
+            <InputText type="date" id="DOB" class="" @bind-Value="registerModel.DOB" />
+        </div>
+        <div class="input_group">
+                <label for="email">Email:</label>
+                <InputText type="email" id="email" class="" @bind-Value="registerModel.Email" />
+            </div>
     <div class="input_group">
         <select name="" id="" @bind="registerModel.country">
             <option value="">--select country---</option>
@@ -37,9 +45,6 @@
         }
         </select>
     </div>
-
-   
-
     <div class="input_group">
         <label for="password">Password:</label>
         <InputText id="password" type="password" class="" @bind-Value="registerModel.Password" />
