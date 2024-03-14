@@ -13,6 +13,9 @@ public class User
     public string country {get;set;}
     public string Password { get; set; }
     public string Role { get; set; }
+    public string Gender {get;set;}
+    public string DOB {get;set;}
+
 
     [InverseProperty("User")]
     public ICollection<Gallery> Galleries { get; set; }

@@ -14,10 +14,13 @@ namespace Backed.Services
 
         private readonly Jwt _jwt;
 
-        public UserService(DBconn context,Jwt jwt)
+        private readonly EmailService _emailService;
+
+        public UserService(DBconn context,Jwt jwt,EmailService emailService)
         {
             _context = context;
             _jwt=jwt;
+            _emailService=emailService;
         }
 
         public async Task<ActionResult<ResponseDTO>> GetUsersAsync()
@@ -59,7 +62,9 @@ namespace Backed.Services
                 Password=registerDTO.Password,
                 LastName=registerDTO.LastName,
                 Role="User"  ,
-                country=registerDTO.country
+                country=registerDTO.country,
+                DOB=registerDTO.DOB,
+                Gender=registerDTO.Gender
             };
             
             try
@@ -67,6 +72,7 @@ namespace Backed.Services
                 
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
+                await _emailService.SendWelcomeMessage(user);
                 return new ResponseDTO { message = "User created successfully", responseData = user };
             }
             catch (Exception ex)

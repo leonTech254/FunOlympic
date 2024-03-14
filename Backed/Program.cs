@@ -28,6 +28,7 @@ builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IGalleryService, GalleryService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IEventSubscriberService, EventSubscriberService>();
+builder.Services.AddScoped<EmailService>();
 
 //=========================AUTHORIZATION=========================================================
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
